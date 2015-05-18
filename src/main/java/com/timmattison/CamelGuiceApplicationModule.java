@@ -1,6 +1,7 @@
 package com.timmattison;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.name.Names;
 import com.timmattison.jndibeans.BasicSayHello1;
 import com.timmattison.jndibeans.BasicSayHello2;
 import com.timmattison.jndibeans.BasicSayHello3;
@@ -30,11 +31,15 @@ public class CamelGuiceApplicationModule extends CamelModuleWithMatchingRoutes {
         bind(SayHello3.class).to(BasicSayHello3.class);
 
         bind(MessageHandler.class).to(BasicMessageHandler.class);
-
         bind(DefaultCamelContext.class).in(Singleton.class);
 
+        // Configure the Routes to pick servlet component to serve the http requests.
+        bind(String.class)
+                .annotatedWith(Names.named("httpComponentName"))
+                .toInstance("servlet");
+
+        // Add Routes.
         bind(RestRoutes.class);
         bind(DirectTestRoutes.class);
-
     }
 }

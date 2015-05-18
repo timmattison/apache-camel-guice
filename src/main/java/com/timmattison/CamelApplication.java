@@ -1,5 +1,8 @@
 package com.timmattison;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import javax.naming.InitialContext;
 
 /**
@@ -7,6 +10,7 @@ import javax.naming.InitialContext;
  */
 public class CamelApplication {
     public static void main(String[] args) throws Exception {
+
         // Create the Camel context with Guice
         InitialContext context = new InitialContext();
 
