@@ -17,7 +17,6 @@ public class BasicSayHello1 implements SayHello1 {
         this.messageHandler = messageHandler;
     }
 
-    @Override
     public void process(Exchange exchange) throws Exception {
         exchange.getOut().setBody(messageHandler.getMessage(getClass().getName()));
     }
