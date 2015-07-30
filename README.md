@@ -4,5 +4,5 @@ Companion code for [Building Apache Camel Applications with Guice](http://blog.t
 To run:
 
 ``` shell
-mvn camel:run
+mvn clean compile exec:java
 ```
