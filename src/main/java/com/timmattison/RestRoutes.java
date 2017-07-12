@@ -3,16 +3,27 @@ package com.timmattison;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  * Created by timmattison on 10/27/14.
  */
 public class RestRoutes extends RouteBuilder {
-    public static final String RESTLET = "restlet";
-    public static final int PORT = 8000;
+
+    @Inject @Named("httpComponentName")
+    public String httpComponentName;
+
+    public static final String SERVLET = "servlet";
 
     @Override
     public void configure() throws Exception {
-        restConfiguration().bindingMode(RestBindingMode.auto).component(RESTLET).port(PORT);
+        if (this.httpComponentName.equals(SERVLET)) {
+            restConfiguration().bindingMode(RestBindingMode.auto).component(SERVLET);
+        }else {
+            // Assumes that we are running standalone mode.
+            restConfiguration().bindingMode(RestBindingMode.auto).component("restlet").port("8080");
+        }
 
         rest(HttpConstants.TEST_URL_1)
                 .get().to(CamelConstants.DIRECT_TEST_ROUTE_1);
